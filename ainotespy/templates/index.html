@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Exam Analyzer</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="container">
+    <h1>📊 AI Exam Paper Analyzer</h1>
+
+    <form method="POST" enctype="multipart/form-data">
+
+        <label>Syllabus Topics (comma separated)</label>
+        <textarea name="syllabus" required></textarea>
+
+        <label>Paste Text (Optional)</label>
+        <textarea name="text_input"></textarea>
+
+        <label>Upload Multiple Files (PDF/TXT)</label>
+        <input type="file" name="files" multiple>
+
+        <label>Total Papers</label>
+        <input type="number" name="paper_count" required>
+
+        <button type="submit">Analyze</button>
+    </form>
+
+    {% if error %}
+        <p class="error">{{ error }}</p>
+    {% endif %}
+
+    {% if results %}
+    <div class="results">
+        <h2>Analysis Result</h2>
+        <table>
+            <tr>
+                <th>Topic</th>
+                <th>Frequency</th>
+                <th>Score %</th>
+                <th>Priority</th>
+            </tr>
+
+            {% for r in results %}
+            <tr>
+                <td>{{ r.topic }}</td>
+                <td>{{ r.count }}</td>
+                <td>{{ r.score }}</td>
+                <td>{{ r.priority }}</td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
